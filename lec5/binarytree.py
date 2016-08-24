@@ -2,10 +2,12 @@
 # Lecture 5 of 6.006
 # Binary Trees
 
+import random
+
 '''
 bt is short for binary tree (btree is taken for something else)
 '''
-class bt (object):
+class bintree(object):
     def __init__(self, key = None, parent = None, \
         left = None, right = None):
         self.key = key
@@ -24,25 +26,52 @@ class bt (object):
         return self.right
     def getParent(self):
         return self.parent
-    def insert(self, key):
-        pass
     def find(self, key):
-        pass
+        if (self.key == key):
+            return self
+        elif self.left != None and key < self.key:
+            return self.left.find(key)
+        elif self.right != None and self.key <= key:
+            return self.right.find(key)
+        else:
+            return None 
     def delete(self, key):
         pass
     def display(self, level = 0):
-        print (("    " * level) + str(self.key) + ":")
+        print (("        " * level) + str(self.key) + ":")
         if self.left != None:
             self.left.display(level + 1)
         if self.right != None:
-            self.right.display(level +1)
-            
-#begin tests
+            self.right.display(level + 1)
+    def insert(self, key):
+        if key < self.key:
+            if self.left == None:
+                self.left = bintree(key, self)
+                # can do avl balancing if need be
+            else:
+                # recurively insert into the left sub tree
+                self.left.insert(key)
+        if self.key <= key:
+            if self.right == None:
+                self.right = bintree(key, self)
+            else:
+                self.right.insert(key)
+        
 
-print "hello"
-binT = bt(5)
-binT.left = bt(3)
-binT.right = bt(7)
-binT.right.right = bt(20)
-binT.right.left = bt(6)
-binT.display()
+tree = bintree(int(random.random() * 100))
+for x in range(0, 50):
+    tree.insert(int(random.random() * 100))
+tree.display()
+
+a = tree.find(32)
+if a != None:
+    print "found 32"
+    a.display()
+a = tree.find(3)
+if a != None:
+    print "found 3"
+    a.display()
+a = tree.find(42)
+if a != None:
+    print "found 42"
+    a.display()
