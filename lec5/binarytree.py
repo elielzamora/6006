@@ -26,6 +26,9 @@ class bintree(object):
         return self.right
     def getParent(self):
         return self.parent
+    def setParent(self, tree):
+        self.parent = tree
+        return self
     def find(self, key):
         if (self.key == key):
             return self
@@ -35,14 +38,38 @@ class bintree(object):
             return self.right.find(key)
         else:
             return None 
-    def delete(self, key):
-        pass
+    def delete(self, dnode):
+        par = dnode.parent
+        l = dnode.left
+        r = dnode.right
+        if dnode.parent == None: # root node
+            #delete parent node
+            return dnode
+        else:
+            if(dnode == parent.left): #left node
+                dnode.parent.left = dnode.right
+                dnode.parent.insertTree()
+            elif(dnode == parent.right): #right node
+
     def display(self, level = 0):
         print (("        " * level) + str(self.key) + ":")
         if self.left != None:
             self.left.display(level + 1)
         if self.right != None:
             self.right.display(level + 1)
+    def insertTree(self, tree):
+        if tree.key < self.key:
+            if self.left == None: #left
+                self.left = tree.setParent(self.left)
+                # can do avl balancing if need be
+            else:
+                # recurively insert into the left sub tree
+                self.left.insert(tree)
+        if self.key <= tree.key: #right
+            if self.right == None:
+                self.right = tree.setParent(self.right)
+            else:
+                self.right.insert(tree)
     def insert(self, key):
         if key < self.key:
             if self.left == None:
@@ -59,7 +86,7 @@ class bintree(object):
         
 
 tree = bintree(int(random.random() * 100))
-for x in range(0, 50):
+for x in range(0, 20):
     tree.insert(int(random.random() * 100))
 tree.display()
 
