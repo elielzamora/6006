@@ -38,18 +38,24 @@ class bintree(object):
             return self.right.find(key)
         else:
             return None 
+    def root(self):
+        root = self
+        while root.parent != None
+            root = root.parent
+        return root
     def delete(self, dnode):
-        par = dnode.parent
-        l = dnode.left
-        r = dnode.right
         if dnode.parent == None: # root node
             #delete parent node
             return dnode
         else:
             if(dnode == parent.left): #left node
                 dnode.parent.left = dnode.right
-                dnode.parent.insertTree()
+                dnode.parent.insertTree(dnode.left)
+                return dnode.parent.root()
             elif(dnode == parent.right): #right node
+                dnode.parent.right = dnode.right
+                dnode.parent.insertTree(dnode.left)
+                return dnode.parent.root()
 
     def display(self, level = 0):
         print (("        " * level) + str(self.key) + ":")
