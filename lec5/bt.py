@@ -40,22 +40,48 @@ class bintree(object):
             return None 
     def root(self):
         root = self
-        while root.parent != None
+        while root.parent != None:
             root = root.parent
         return root
-    def delete(self, dnode):
-        if dnode.parent == None: # root node
-            #delete parent node
-            return dnode
+    def rotateLeft(self):
+        #root = self
+        #pivot = self.right
+        r = self
+        p = self.right
+        t = self.parent
+        a = r.left
+        b = p.left
+        c = p.right
+        p.parent = t
+        r.parent = p
+        r.right = b
+        p.left = r
+    def rotateRight(self):
+        #root = self
+        #pivot = self.left
+        r = self
+        p = self.left
+        t = self.parent
+        a = r.right
+        b = p.right
+        c = p.left
+        p.parent = t
+        r.left = b
+        r.left = b
+        p.right = r
+    def delete(self):
+        if (node.left == None and node.right == None):
+            del node # delete leaf
+        elif(node.left != None and node.right == None):
+            node.rotateLeft()
+            node.delete()
+        elif(node.left == None and node.right != None):
+            node.rotateRight()
+            node.delete()
         else:
-            if(dnode == parent.left): #left node
-                dnode.parent.left = dnode.right
-                dnode.parent.insertTree(dnode.left)
-                return dnode.parent.root()
-            elif(dnode == parent.right): #right node
-                dnode.parent.right = dnode.right
-                dnode.parent.insertTree(dnode.left)
-                return dnode.parent.root()
+            # can randomize or use adv. technique (e.g. avl, rb tree)
+            node.rotateLeft() # prone to left biased trees
+            node.delete()
 
     def display(self, level = 0):
         print (("        " * level) + str(self.key) + ":")
@@ -91,20 +117,28 @@ class bintree(object):
                 self.right.insert(key)
         
 
-tree = bintree(int(random.random() * 100))
-for x in range(0, 20):
-    tree.insert(int(random.random() * 100))
-tree.display()
+# tree = bintree(int(random.random() * 100))
+# for x in range(0, 20):
+#     tree.insert(int(random.random() * 100))
+# tree.display()
 
-a = tree.find(32)
-if a != None:
-    print "found 32"
-    a.display()
-a = tree.find(3)
-if a != None:
-    print "found 3"
-    a.display()
-a = tree.find(42)
-if a != None:
-    print "found 42"
-    a.display()
+# a = tree.find(32)
+# if a != None:
+#     print "found 32"
+#     a.display()
+# a = tree.find(3)
+# if a != None:
+#     print "found 3"
+#     a.display()
+# a = tree.find(42)
+# if a != None:
+#     print "found 42"
+#     a.display()
+
+# create tree interpreter
+tree = bintree(50)
+user_input = ""
+while user_input != "q":
+    user_input = raw_input()
+    tree.display()
+    input()
